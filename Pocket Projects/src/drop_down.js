@@ -10,7 +10,7 @@ const dogs = {
 };
 
 let dropdown = document.getElementsByClassName("drop-down-dog-list")[0];
-
+let header = document.getElementsByClassName("drop-down-dog-nav")[0];
 function dogLinkCreator(dogs) {
   let dogList = [];
   for (let key in dogs) {
@@ -18,7 +18,7 @@ function dogLinkCreator(dogs) {
     anchor.innerText = key;
     anchor.setAttribute("href", dogs[key]);
     let list = document.createElement("li");
-    list.classList.add("dog-link");
+    list.classList.add("dog-link", "hide-me");
     list.appendChild(anchor);
     dogList.push(list);
   }
@@ -32,4 +32,22 @@ function attachDogLinks(dogs, el) {
   }
 }
 
+function handleEnter(el) {
+  el.addEventListener('mouseenter', e => {
+    Array.from(dropdown.children).forEach( child => {
+      child.classList.remove('hide-me');
+    });
+  });
+}
+
+function handleLeave(el) {
+  el.addEventListener('mouseleave', e => {
+    Array.from(dropdown.children).forEach(child => {
+      child.classList.add('hide-me');
+    });
+  });
+}
+
 attachDogLinks(dogs, dropdown);
+handleEnter(header);
+handleLeave(header);
